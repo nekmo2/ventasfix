@@ -32,14 +32,14 @@ class UsuarioController extends Controller
     }
 
     // muestra el formulario para editar un usuario
-    public function edit($id)
+    public function edit(string $id)
     {
         $usuario = User::findOrFail($id);
         return view('users-edit', ['usuario' => $usuario]);
     }
 
     // actualiza los datos de un usuario existente
-    public function update(Request $request, $id)
+    public function update(Request $request, string $id)
     {
         $usuario = User::findOrFail($id);
 
@@ -67,7 +67,7 @@ class UsuarioController extends Controller
     }
 
     // elimina un usuario
-    public function destroy($id)
+    public function destroy(string $id)
     {
         $usuario = User::findOrFail($id);
         $usuario->delete();

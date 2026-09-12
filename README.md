@@ -1,66 +1,100 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# VentasFix - Sistema de Gestión de Carro de Compra
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Backoffice y API REST para la gestión de usuarios, productos y clientes de VentasFix, desarrollado como examen del ramo Desarrollo de Software Web I. Construido con Laravel sobre el template Approx (Admin Dashboard).
 
-## About Laravel
+## Descripción
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Sistema con dos frentes de acceso:
+- **Backoffice web**: interfaz gráfica para trabajadores del sistema, con login, dashboard y mantenedores (crear, ver, editar, eliminar) de Usuarios, Productos y Clientes.
+- **API REST**: permite que aplicaciones de terceros (como el sistema Softland) interactúen con los mismos datos, protegida mediante autenticación por token (Laravel Sanctum).
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+También incluye un componente reutilizable que simula el consumo de un servicio externo (Softland) para consultar disponibilidad de stock por SKU.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Tecnologías utilizadas
 
-## Learning Laravel
+- PHP 8.3
+- Laravel 11
+- MySQL 8.0
+- Laragon 6 (entorno de desarrollo local)
+- Blade (motor de vistas de Laravel)
+- Eloquent (ORM de Laravel)
+- Laravel Sanctum (autenticación de la API mediante tokens)
+- Template Approx (Bootstrap 5 Admin Dashboard)
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Funcionalidades
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+**Backoffice (interfaz web)**
+- Login y registro de usuarios del sistema (clave cifrada con bcrypt)
+- Dashboard con contadores de usuarios, productos y clientes registrados
+- Mantenedor de Usuarios: listar, crear, editar, eliminar
+- Mantenedor de Productos: listar, crear, editar, eliminar (con cálculo automático del precio de venta según el 19% de IVA)
+- Mantenedor de Clientes: listar, crear, editar, eliminar
+- Componente reutilizable que simula la consulta de disponibilidad de un producto en el sistema Softland
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+**API REST**
+- Login con generación de token de acceso (Sanctum)
+- Logout con invalidación del token
+- CRUD completo de Usuarios, Productos y Clientes, protegido por autenticación
+- Códigos de respuesta HTTP según estándar (200, 201, 404, 401)
 
-## Laravel Sponsors
+## Estructura del proyecto
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+- `app/Models/` — modelos Eloquent: `User`, `Producto`, `Cliente`
+- `app/Http/Controllers/UsuarioController.php`, `ProductoController.php`, `ClienteController.php` — controladores del backoffice
+- `app/Http/Controllers/DashboardController.php` — controlador del dashboard
+- `app/Http/Controllers/Api/` — controladores de la API (`AuthApiController`, `UsuarioApiController`, `ProductoApiController`, `ClienteApiController`)
+- `app/Services/SoftlandService.php` — componente reutilizable que simula el servicio externo
+- `resources/views/` — vistas del backoffice (usa el layout del template Approx)
+- `routes/web.php` — rutas del backoffice
+- `routes/api.php` — rutas de la API
+- `database/migrations/` — migraciones de `users`, `productos`, `clientes`
+- `postman/` — colección de Postman con las pruebas de la API
 
-### Premium Partners
+## Configuración de base de datos
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+Variables de entorno necesarias en `.env`:
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=ventasfix
+DB_USERNAME=root
+DB_PASSWORD=desarrollo_software_1
 
-## Contributing
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## Cómo ejecutar el proyecto
 
-## Code of Conduct
+```bash
+composer install
+copy .env.example .env
+php artisan key:generate
+npm install
+npm run build
+php artisan migrate
+php artisan serve
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Luego entrar a `http://127.0.0.1:8000`
 
-## Security Vulnerabilities
+## Usuario de prueba
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Para acceder al backoffice sin necesidad de registrarse:
 
-## License
+- **Email:** alvaro@ventasfix.cl
+- **Contraseña:** 12345678
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Este mismo usuario puede usarse para autenticarse en la API mediante `POST /api/login`.
+
+## Pruebas de la API (Postman)
+
+En la carpeta `postman/` se incluye la colección `Examen-API-VentasFix.postman_collection.json` con las pruebas realizadas a todos los endpoints de la API (login, logout, y el CRUD completo de usuarios, productos y clientes, incluyendo casos de error 404 y 401).
+
+Para probarla:
+
+1. Abrir Postman
+2. Importar el archivo (`File → Import`)
+3. Con el proyecto corriendo (`php artisan serve`), ejecutar primero el request de `Login` dentro de la carpeta `Auth` para obtener un token
+4. Usar ese token (Bearer Token) en las demás requests
+
+## Grupo
+
+Álvaro Vásquez

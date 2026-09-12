@@ -68,7 +68,19 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('any', 'users')}}">
                             <i class="iconoir-group menu-icon"></i>
-                            <span>Users</span>
+                            <span>Usuarios</span>
+                        </a>
+                    </li><!--end nav-item-->
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('any', 'productos')}}">
+                            <i class="fas fa-box menu-icon"></i>
+                            <span>Productos</span>
+                        </a>
+                    </li><!--end nav-item-->
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('any', 'clientes')}}">
+                            <i class="fas fa-building menu-icon"></i>
+                            <span>Clientes</span>
                         </a>
                     </li><!--end nav-item-->
 

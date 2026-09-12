@@ -83,4 +83,14 @@ class ProductoController extends Controller
 
         return redirect('/productos');
     }
+
+        // consulta el estado de disponibilidad de un producto en el sistema externo Softland
+    public function consultarSoftland(string $id)
+    {
+        $producto = Producto::findOrFail($id);
+        $resultado = \App\Services\SoftlandService::consultarDisponibilidad($producto->sku);
+
+        return response()->json($resultado);
+    }
+    
 }

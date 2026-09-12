@@ -36,6 +36,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/productos/{id}/edit', [ProductoController::class, 'edit']);
     Route::put('/productos/{id}', [ProductoController::class, 'update']);
     Route::delete('/productos/{id}', [ProductoController::class, 'destroy']);
+    Route::get('/productos/{id}/softland', [ProductoController::class, 'consultarSoftland']);
 });
 
 // rutas del mantenedor de clientes

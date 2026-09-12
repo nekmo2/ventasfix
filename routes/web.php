@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoutingController;
 use App\Http\Controllers\UsuarioController;
+use App\Http\Controllers\ProductoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,14 +18,22 @@ use App\Http\Controllers\UsuarioController;
 
 require __DIR__ . '/auth.php';
 
-// rutas del mantenedor de usuarios, van antes del bloque de rutas genericas
-// para que laravel las use a ellas primero y no caigan en el comodin de abajo
+// rutas del mantenedor de usuarios
 Route::middleware('auth')->group(function () {
     Route::get('/users', [UsuarioController::class, 'index']);
     Route::post('/users', [UsuarioController::class, 'store']);
     Route::get('/users/{id}/edit', [UsuarioController::class, 'edit']);
     Route::put('/users/{id}', [UsuarioController::class, 'update']);
     Route::delete('/users/{id}', [UsuarioController::class, 'destroy']);
+});
+
+// rutas del mantenedor de productos
+Route::middleware('auth')->group(function () {
+    Route::get('/productos', [ProductoController::class, 'index']);
+    Route::post('/productos', [ProductoController::class, 'store']);
+    Route::get('/productos/{id}/edit', [ProductoController::class, 'edit']);
+    Route::put('/productos/{id}', [ProductoController::class, 'update']);
+    Route::delete('/productos/{id}', [ProductoController::class, 'destroy']);
 });
 
 Route::group(['prefix' => '/', 'middleware' => 'auth'], function () {

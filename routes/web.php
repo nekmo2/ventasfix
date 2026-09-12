@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoutingController;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\ProductoController;
+use App\Http\Controllers\ClienteController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,10 +37,18 @@ Route::middleware('auth')->group(function () {
     Route::delete('/productos/{id}', [ProductoController::class, 'destroy']);
 });
 
+// rutas del mantenedor de clientes
+Route::middleware('auth')->group(function () {
+    Route::get('/clientes', [ClienteController::class, 'index']);
+    Route::post('/clientes', [ClienteController::class, 'store']);
+    Route::get('/clientes/{id}/edit', [ClienteController::class, 'edit']);
+    Route::put('/clientes/{id}', [ClienteController::class, 'update']);
+    Route::delete('/clientes/{id}', [ClienteController::class, 'destroy']);
+});
+
 Route::group(['prefix' => '/', 'middleware' => 'auth'], function () {
     Route::get('', [RoutingController::class, 'index'])->name('root');
     Route::get('{first}/{second}/{third}', [RoutingController::class, 'thirdLevel'])->name('third');
     Route::get('{first}/{second}', [RoutingController::class, 'secondLevel'])->name('second');
     Route::get('{any}', [RoutingController::class, 'root'])->name('any');
 });
-
